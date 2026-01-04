@@ -2,8 +2,10 @@ package org.aop.demo.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -13,17 +15,19 @@ import java.util.Arrays;
 @Slf4j
 public class AspectDemo
 {
-	//	@Before("execution(* org.aop.demo.service.*.*(..))")
-	//	public void BeforeMethod()
-	//	{
-	//		System.out.println("Before method");
-	//	}
-	//
-	//	@After("execution(* org.aop.demo.service.*.*(..))")
-	//	public void AfterMethod()
-	//	{
-	//		System.out.println("After method");
-	//	}
+	@Before("execution(* org.aop.demo.service.AopService.testing1(..)) || " + "execution" +
+					"(*" + " org.aop.demo.service.AopService.testing2(..))")
+	public void BeforeMethod()
+	{
+		System.out.println("Before method - Execution is for Method 1 and 2");
+	}
+
+	@After("execution(* org.aop.demo.service.AopService.testing1(..)) || " + "execution(*" +
+					" org.aop.demo.service.AopService.testing2(..))")
+	public void AfterMethod()
+	{
+		System.out.println("After method - Execution is for Method 1 and 2 ");
+	}
 
 	@Around("execution(* org.aop.demo.service.AopService.testing2(..))")
 	public Object AroundMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
